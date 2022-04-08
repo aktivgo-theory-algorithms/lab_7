@@ -5,25 +5,149 @@ using System.Linq;
 
 namespace task_1
 {
-    internal class Program
+    internal static class Program
     {
         private static List<int> list;
         private static Stopwatch time;
 
-        private const int N = 100000000;
+        private static int N;
 
-        private const bool Print = false;
+        private const bool PrintArrays = false;
+        private const int SearchElement = 5;
 
         public static void Main()
         {
             time = new Stopwatch();
-            
-            LineSearchTask();
-            LineSearchBarrierTask();
+
+            ReadN();
+            LineSearchTask(SearchElement);
+            LineSearchBarrierTask(SearchElement);
             BubbleSortTask();
             SelectionSortTask();
         }
 
+        private static void ReadN()
+        {
+            Console.Write("enter N: ");
+            N = int.Parse(Console.ReadLine() ?? throw new InvalidOperationException());
+            Console.WriteLine();
+        }
+
+        private static void LineSearchTask(int searchElement)
+        {
+            Console.WriteLine("line search");
+            
+            PrintSearchElement(searchElement);
+            
+            // -----------------Worst case--------------------
+            list = CreateLineSearchBadList(N, searchElement);
+            Console.WriteLine("worst case");
+
+            if (PrintArrays) PrintList(list);
+
+            time.Start();
+            var res = LineSearch(list, searchElement);
+            time.Stop();
+            
+            PrintElapsedTime(time);
+            PrintSearchResult(res);
+            
+            time.Reset();
+            
+            // -----------------Average case-------------------
+            list = CreateLineSearchRandomList(N);
+            Console.WriteLine("average case");
+
+            if (PrintArrays) PrintList(list);
+
+            time.Start();
+            res = LineSearch(list, searchElement);
+            time.Stop();
+            
+            PrintElapsedTime(time);
+            PrintSearchResult(res);
+            
+            time.Reset();
+            
+            // ------------------Best case---------------------
+            list = CreateLineSearchBestList(N, searchElement);
+            Console.WriteLine("best case");
+
+            if (PrintArrays) PrintList(list);
+
+            time.Start();
+            res = LineSearch(list, searchElement);
+            time.Stop();
+            
+            PrintElapsedTime(time);
+            PrintSearchResult(res);
+            
+            time.Reset();
+        }
+        
+        private static void LineSearchBarrierTask(int searchElement)
+        {
+            Console.WriteLine("line search with barrier");
+
+            PrintSearchElement(searchElement);
+            
+            // -----------------Worst case--------------------
+            list = CreateLineSearchBadList(N, searchElement);
+            Console.WriteLine("worst case");
+
+            if (PrintArrays) PrintList(list);
+
+            time.Start();
+            var res = LineSearchBarrier(list, searchElement);
+            time.Stop();
+            
+            PrintElapsedTime(time);
+            PrintSearchResult(res);
+            
+            time.Reset();
+            
+            // -----------------Average case-------------------
+            list = CreateLineSearchRandomList(N);
+            Console.WriteLine("average case");
+
+            if (PrintArrays) PrintList(list);
+
+            time.Start();
+            res = LineSearchBarrier(list, searchElement);
+            time.Stop();
+            
+            PrintElapsedTime(time);
+            PrintSearchResult(res);
+            
+            time.Reset();
+            
+            // ------------------Best case---------------------
+            list = CreateLineSearchBestList(N, searchElement);
+            Console.WriteLine("best case");
+
+            if (PrintArrays) PrintList(list);
+
+            time.Start();
+            res = LineSearchBarrier(list, searchElement);
+            time.Stop();
+            
+            PrintElapsedTime(time);
+            PrintSearchResult(res);
+            
+            time.Reset();
+        }
+
+        private static void PrintSearchElement(int searchElement)
+        {
+            Console.WriteLine("search element: " + searchElement);
+            Console.WriteLine();
+        }
+        
+        private static void PrintSearchResult(int result)
+        {
+            Console.WriteLine((result == -1 ? "false" : "true: " + result) + "\n");
+        }
+        
         private static void PrintList(List<int> list)
         {
             foreach (var element in list)
@@ -32,100 +156,60 @@ namespace task_1
             }
             Console.WriteLine();
         }
-        
-        private static void LineSearchTask()
-        {
-            Console.WriteLine("Линейный поиск");
-            
-            const int searchElement = 5;
-            Console.WriteLine("Элемент поиска: " + searchElement);
-            Console.WriteLine();
-            
-            // -----------------------------------------------
-            list = CreateLineSearchBadList(N, searchElement);
-            Console.WriteLine("Худший случай: ");
-
-            if(Print) PrintList(list);
-
-            time.Start();
-            var res = LineSearch(list, searchElement);
-            time.Stop();
-            
-            Console.WriteLine("time = " + (double)time.ElapsedMilliseconds / 1000000);
-            
-            Console.WriteLine((res == -1 ? "false" : "true: " + res) + "\n");
-            
-            time.Reset();
-            
-            // ------------------------------------------------
-            list = CreateLineSearchRandomList(N);
-            Console.WriteLine("Средний случай: ");
-
-            if(Print) PrintList(list);
-
-            time.Start();
-            res = LineSearch(list, searchElement);
-            time.Stop();
-            
-            Console.WriteLine("time = " + (double)time.ElapsedMilliseconds / 1000000);
-            
-            Console.WriteLine((res == -1 ? "false" : "true: " + res) + "\n");
-            
-            time.Reset();
-            
-            // ------------------------------------------------
-            list = CreateLineSearchBestList(N, searchElement);
-            Console.WriteLine("Лучший случай: ");
-
-            if(Print) PrintList(list);
-
-            time.Start();
-            res = LineSearch(list, searchElement);
-            time.Stop();
-            
-            Console.WriteLine("time = " + (double)time.ElapsedMilliseconds / 1000000);
-            
-            Console.WriteLine((res == -1 ? "false" : "true: " + res) + "\n");
-            
-            time.Reset();
-        }
-        
-        private static void LineSearchBarrierTask()
-        {
-            Console.WriteLine("Линейный поиск с барьером");
-            
-            const int searchElement = 5;
-            
-            list = CreateLineSearchBadList(N, searchElement);
-
-            if (Print) PrintList(list);
-
-            time.Start();
-            var res = LineSearchBarrier(list, searchElement);
-            time.Stop();
-            
-            Console.WriteLine("time = " + (double)time.ElapsedMilliseconds / 1000);
-            
-            Console.WriteLine((res == -1 ? "false" : "true: " + res) + "\n");
-            
-            time.Reset();
-        }
 
         private static void BubbleSortTask()
         {
-            Console.WriteLine("Сортировка методом простого обмена");
+            Console.WriteLine("sorting by simple exchange method\n");
             
+            // -----------------Worst case--------------------
             list = CreateSortBadList(N);
-
-            if (Print) PrintList(list);
+            Console.WriteLine("worst case");
+            
+            if (PrintArrays) PrintList(list);
 
             time.Start();
             var res = BubbleSort(list);
             time.Stop();
             
-            Console.WriteLine("time = " + (double)time.ElapsedMilliseconds / 1000);
+            PrintElapsedTime(time);
             
-            if (Print) PrintList(res);
+            if (PrintArrays) PrintList(res);
+            
+            Console.WriteLine();
+            
+            time.Reset();
+            
+            // -----------------Average case-------------------
+            list = CreateSortRandomList(N);
+            Console.WriteLine("average case");
+            
+            if (PrintArrays) PrintList(list);
+
+            time.Start();
+            res = BubbleSort(list);
+            time.Stop();
+            
+            PrintElapsedTime(time);
+            
+            if (PrintArrays) PrintList(res);
+            
+            Console.WriteLine();
+            
+            time.Reset();
+            
+            // ------------------Best case---------------------
+            list = CreateSortBestList(N);
+            Console.WriteLine("best case");
+            
+            if (PrintArrays) PrintList(list);
+
+            time.Start();
+            res = BubbleSort(list);
+            time.Stop();
+            
+            PrintElapsedTime(time);
+            
+            if (PrintArrays) PrintList(res);
             
             Console.WriteLine();
             
@@ -134,22 +218,63 @@ namespace task_1
         
         private static void SelectionSortTask()
         {
-            Console.WriteLine("Сортировка методом простого выбора");
+            Console.WriteLine("sorting by simple selection method\n");
             
+            // -----------------Worst case--------------------
             list = CreateSortBadList(N);
+            Console.WriteLine("worst case");
 
-            if (Print) PrintList(list);
+            if (PrintArrays) PrintList(list);
 
             time.Start();
             var res = SelectionSort(list);
             time.Stop();
             
-            Console.WriteLine("time = " + (double)time.ElapsedMilliseconds / 1000);
+            PrintElapsedTime(time);
             
-            if (Print) PrintList(res);
+            if (PrintArrays) PrintList(res);
             Console.WriteLine();
             
             time.Reset();
+            
+            // -----------------Average case-------------------
+            list = CreateSortBadList(N);
+            Console.WriteLine("average case");
+
+            if (PrintArrays) PrintList(list);
+
+            time.Start();
+            res = SelectionSort(list);
+            time.Stop();
+            
+            PrintElapsedTime(time);
+            
+            if (PrintArrays) PrintList(res);
+            Console.WriteLine();
+            
+            time.Reset();
+            
+            // ------------------Best case---------------------
+            list = CreateSortBadList(N);
+            Console.WriteLine("best case");
+
+            if (PrintArrays) PrintList(list);
+
+            time.Start();
+            res = SelectionSort(list);
+            time.Stop();
+
+            PrintElapsedTime(time);
+            
+            if (PrintArrays) PrintList(res);
+            Console.WriteLine();
+            
+            time.Reset();
+        }
+
+        private static void PrintElapsedTime(Stopwatch time)
+        {
+            Console.WriteLine("time: " + time.ElapsedMilliseconds + "ms or " +  time.ElapsedTicks + "tc");
         }
 
         private static List<int> CreateLineSearchBestList(int size, int searchElement)
@@ -167,12 +292,11 @@ namespace task_1
         private static List<int> CreateLineSearchRandomList(int size)
         {
             var res = new List<int>();
-
             var rand = new Random();
             
             for (var i = 0; i < size; i++)
             {
-                res.Add(rand.Next(0, size));
+                res.Add(rand.Next(2 * size));
             }
 
             return res;
@@ -197,6 +321,31 @@ namespace task_1
             for (var i = 0; i < size; i++)
             {
                 res.Add(size - i);
+            }
+
+            return res;
+        }
+        
+        private static List<int> CreateSortRandomList(int size)
+        {
+            var res = new List<int>();
+
+            for (var i = 0; i < size; i++)
+            {
+                res.Add(i);
+            }
+
+            return res;
+        }
+        
+        private static List<int> CreateSortBestList(int size)
+        {
+            var res = new List<int>();
+            var rand = new Random();
+
+            for (var i = 0; i < size; i++)
+            {
+                res.Add(rand.Next(size));
             }
 
             return res;
