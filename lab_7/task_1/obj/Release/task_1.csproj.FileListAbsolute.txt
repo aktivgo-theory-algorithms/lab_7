@@ -1,0 +1,7 @@
+C:\Study\theory_algorithm\lab_7\lab_7\task_1\obj\Release\task_1.csproj.AssemblyReference.cache
+C:\Study\theory_algorithm\lab_7\lab_7\task_1\obj\Release\task_1.csproj.SuggestedBindingRedirects.cache
+C:\Study\theory_algorithm\lab_7\lab_7\task_1\obj\Release\task_1.csproj.CoreCompileInputs.cache
+C:\Study\theory_algorithm\lab_7\lab_7\task_1\bin\Release\task_1.exe
+C:\Study\theory_algorithm\lab_7\lab_7\task_1\bin\Release\task_1.pdb
+C:\Study\theory_algorithm\lab_7\lab_7\task_1\obj\Release\task_1.exe
+C:\Study\theory_algorithm\lab_7\lab_7\task_1\obj\Release\task_1.pdb
