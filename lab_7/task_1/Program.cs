@@ -12,7 +12,7 @@ namespace task_1
 
         private static int N;
 
-        private const bool PrintArrays = true;
+        private const bool PrintArrays = false;
         private const int SearchElement = 5;
 
         public static void Main()
