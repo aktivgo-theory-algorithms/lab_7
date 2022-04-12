@@ -12,7 +12,7 @@ namespace task_1
 
         private static int N;
 
-        private const bool PrintArrays = false;
+        private const bool PrintArrays = true;
         private const int SearchElement = 5;
 
         public static void Main()
@@ -410,8 +410,11 @@ namespace task_1
                         min = j;
                     }
                 }
-                
-                (res[i], res[min]) = (res[min], res[i]);
+
+                if (min != i)
+                {
+                    (res[i], res[min]) = (res[min], res[i]);
+                }
             }
 
             return res;
