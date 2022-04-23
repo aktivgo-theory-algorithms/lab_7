@@ -21,9 +21,9 @@ namespace task_1
             time = new Stopwatch();
 
             ReadN();
-            LineSearchTask(SearchElement);
-            LineSearchBarrierTask(SearchElement);
-            BubbleSortTask();
+            //LineSearchTask(SearchElement);
+            //LineSearchBarrierTask(SearchElement);
+            //BubbleSortTask();
             SelectionSortTask();
         }
 
@@ -239,7 +239,7 @@ namespace task_1
             time.Reset();
             
             // -----------------Average case-------------------
-            list = CreateSortBadList(N);
+            list = CreateSortRandomList(N);
             Console.WriteLine("average case");
 
             if (PrintArrays) PrintList(list);
@@ -256,7 +256,7 @@ namespace task_1
             time.Reset();
             
             // ------------------Best case---------------------
-            list = CreateSortBadList(N);
+            list = CreateSortBestList(N);
             Console.WriteLine("best case");
 
             if (PrintArrays) PrintList(list);
@@ -330,10 +330,11 @@ namespace task_1
         private static List<int> CreateSortRandomList(int size)
         {
             var res = new List<int>();
+            var rand = new Random();
 
             for (var i = 0; i < size; i++)
             {
-                res.Add(i);
+                res.Add(rand.Next(size));
             }
 
             return res;
@@ -342,11 +343,10 @@ namespace task_1
         private static List<int> CreateSortBestList(int size)
         {
             var res = new List<int>();
-            var rand = new Random();
 
             for (var i = 0; i < size; i++)
             {
-                res.Add(rand.Next(size));
+                res.Add(i);
             }
 
             return res;
