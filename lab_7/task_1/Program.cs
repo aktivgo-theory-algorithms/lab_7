@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 
 namespace task_1
@@ -353,71 +354,65 @@ namespace task_1
 
         private static int LineSearch(IReadOnlyList<int> list, int searchElement)
         {
-            for (var i = 0; i < list.Count; i++)
+            int i = 0;
+            while (i < list.Count && list[i] != searchElement)
             {
-                if (list[i] == searchElement)
-                {
-                    return i;
-                }
+                i++;
             }
-            
-            return -1;
+
+            return i;
         }
         
         private static int LineSearchBarrier(IList<int> list, int searchElement)
         {
             list.Add(searchElement);
             
-            var i = 0;
+            int i = 0;
             while (list[i] != searchElement)
             {
                 i++;
             }
 
-            return i < list.Count - 1 ? i : -1;
+            return i;
         }
 
-        private static List<int> BubbleSort(IEnumerable<int> list)
+        private static List<int> BubbleSort(List<int> list)
         {
-            var res = list.ToList();
-
-            for (var i = 0; i < res.Count - 1; i++)
+            for (var i = 0; i < list.Count - 1; i++)
             {
-                for (var j = 0; j < res.Count - 1; j++)
+                for (var j = 0; j < list.Count - i - 1; j++)
                 {
-                    if (res[j] > res[j + 1])
+                    if (list[j] > list[j + 1])
                     {
-                        (res[j], res[j + 1]) = (res[j + 1], res[j]);
+                        (list[j], list[j + 1]) = (list[j + 1], list[j]);
                     }
                 }
             }
 
-            return res;
+            return list;
         }
         
-        private static List<int> SelectionSort(IEnumerable<int> list)
+        private static List<int> SelectionSort(List<int> list)
         {
-            var res = list.ToList();
-
-            for (var i = 0; i < res.Count - 1; i++)
+            for (var i = 0; i < list.Count - 1; i++)
             {
-                var min = i;
+                var minI = i;
                 
-                for (var j = i + 1; j < res.Count; j++)
+                for (var j = i + 1; j < list.Count; j++)
                 {
-                    if (res[j] < res[min])
+                    if (list[j] < list[minI])
                     {
-                        min = j;
+                        minI = j;
                     }
                 }
 
-                if (min != i)
+                if (minI != i)
                 {
-                    (res[i], res[min]) = (res[min], res[i]);
+                    (list[i], list[minI]) = (list[minI], list[i]);
                 }
             }
 
-            return res;
+            return list;
         }
     }
 }
